@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply h-screen grid place-items-center;
+}
+.slider {
+  @apply w-full max-w-[800px] h-[350px] relative overflow-hidden rounded-[15px];
+}
+.slide {
+  @apply w-full max-w-[800px] h-[350px] absolute transition-all duration-[0.5s];
+}
+.slide img {
+  @apply w-full h-full object-cover;
+}
+.btn {
+  @apply absolute w-10 h-10 z-[10px] cursor-pointer bg-white text-lg p-2.5 rounded-[50%] border-[none] active:scale-110 flex justify-center items-center;
+}
+.btn-prev {
+  @apply left-[2%] top-[45%];
+}
+.btn-next {
+  @apply right-[2%] top-[45%];
+}
