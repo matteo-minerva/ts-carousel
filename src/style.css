@@ -29,3 +29,6 @@ body {
 .dot {
   @apply bg-white border border-sky-800 rounded-full w-3 h-3;
 }
+.autoplay {
+  @apply absolute z-10 bottom-0 right-0 w-8 h-auto bg-white rounded-full p-2.5 m-1;
+}

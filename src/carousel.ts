@@ -19,14 +19,17 @@ const handleDotClick = (slides: HTMLDivElement[], currentSlide: number, dots: HT
 export const init = () => {
   const slidesNodeList = document.querySelectorAll<HTMLDivElement>(".slide");
   const slides = Array.from(slidesNodeList);
-  const nextSlide = document.querySelector<HTMLDivElement>(".btn-next");
-  const prevSlide = document.querySelector<HTMLDivElement>(".btn-prev");
+  const nextSlideBtn = document.querySelector<HTMLButtonElement>(".btn-next");
+  const prevSlideBtn = document.querySelector<HTMLButtonElement>(".btn-prev");
   const dotsNodeList = document.querySelectorAll<HTMLDivElement>(".dot");
   const dots = Array.from(dotsNodeList);
+  const autoplayStartBtn = document.querySelector<HTMLButtonElement>(".autoplay-start");
+  const autoplayPauseBtn = document.querySelector<HTMLButtonElement>(".autoplay-pause");
 
   let currentSlide = 0;
   let touchStartX = 0;
   let touchEndX = 0;
+  let autoplayInterval: number | undefined = undefined;
 
   const handleNextSlideClick = () => {
     currentSlide = (currentSlide + 1) % slides.length;
@@ -56,13 +59,32 @@ export const init = () => {
     updatePosition(slides, dots, currentSlide);
   };
 
-  nextSlide!.addEventListener("click", handleNextSlideClick);
-  prevSlide!.addEventListener("click", handlePrevSlideClick);
+  const handleAutoplayStart = () => {
+    autoplayStartBtn!.classList.toggle("hidden");
+    autoplayPauseBtn!.classList.toggle("hidden");
+    handleNextSlideClick();
+
+    autoplayInterval = setInterval(() => {
+      handleNextSlideClick();
+    }, 1200);
+  };
+
+  const handleAutoplayPause = () => {
+    autoplayStartBtn!.classList.toggle("hidden");
+    autoplayPauseBtn!.classList.toggle("hidden");
+    return clearInterval(autoplayInterval);
+  };
+
+  nextSlideBtn!.addEventListener("click", handleNextSlideClick);
+  prevSlideBtn!.addEventListener("click", handlePrevSlideClick);
 
   dots.forEach((dot) => dot.addEventListener("click", (event) => handleDotClick(slides, currentSlide, dots, event)));
   slides.forEach((slide) => slide.addEventListener("touchstart", handleSwipeStart));
   slides.forEach((slide) => slide.addEventListener("touchmove", handleSwipeMove));
   slides.forEach((slide) => slide.addEventListener("touchend", handleSwipeEnd));
+
+  autoplayStartBtn!.addEventListener("click", handleAutoplayStart);
+  autoplayPauseBtn!.addEventListener("click", handleAutoplayPause);
 
   updatePosition(slides, dots, currentSlide);
 };
