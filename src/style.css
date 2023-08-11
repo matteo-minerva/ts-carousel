@@ -6,7 +6,7 @@ body {
   @apply h-screen grid place-items-center;
 }
 .slider {
-  @apply w-full max-w-[800px] h-[350px] relative overflow-hidden rounded-[15px];
+  @apply w-full max-w-[800px] h-[350px] relative overflow-hidden rounded-xl;
 }
 .slide {
   @apply w-full max-w-[800px] h-[350px] absolute transition-all duration-[0.5s];
