@@ -1,6 +1,7 @@
 const SWIPE_DISTANCE_THRESHOLD = 50;
 const ACTIVE_DOT_COLOR = "#2563eb";
 const INACTIVE_DOT_COLOR = "#fff";
+const TIMEOUT_VALUE = 1500;
 
 const updatePosition = (slides: HTMLDivElement[], dots: HTMLDivElement[], currentSlideIndex: number) => {
   slides.forEach((slide, index) => {
@@ -66,7 +67,7 @@ export const init = () => {
 
     autoplayInterval = setInterval(() => {
       handleNextSlideClick();
-    }, 1200);
+    }, TIMEOUT_VALUE);
   };
 
   const handleAutoplayPause = () => {
