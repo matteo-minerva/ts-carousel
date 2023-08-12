@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply h-screen grid place-items-center;
+  @apply h-screen flex justify-center items-center bg-gray-300;
 }
 .slider {
   @apply w-full max-w-[800px] h-[350px] relative overflow-hidden rounded-xl;
@@ -15,7 +15,7 @@ body {
   @apply w-full h-full object-cover;
 }
 .btn {
-  @apply absolute w-10 h-10 z-10 cursor-pointer bg-white text-lg p-2.5 rounded-[50%] border-[none] active:scale-110 flex justify-center items-center;
+  @apply absolute w-10 h-10 z-10 cursor-pointer bg-white text-lg p-2.5 rounded-[50%] border-[none] active:scale-110 flex justify-center items-center shadow;
 }
 .btn-prev {
   @apply left-[2%] top-[45%];
@@ -30,5 +30,5 @@ body {
   @apply bg-white border border-sky-800 rounded-full w-3 h-3;
 }
 .autoplay {
-  @apply absolute z-10 bottom-0 right-0 w-8 h-auto bg-white rounded-full p-2.5 m-1;
+  @apply absolute z-10 bottom-0 right-0 w-8 h-auto bg-white rounded-full p-2.5 m-1 shadow;
 }
