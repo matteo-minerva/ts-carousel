@@ -9,39 +9,6 @@ const SLIDES_IMAGES = [
   "https://source.unsplash.com/random?japan,cherry",
 ];
 
-const updatePosition = (slides: HTMLDivElement[], dots: HTMLDivElement[], currentSlideIndex: number) => {
-  slides.forEach((slide, index) => {
-    slide.style.transform = `translateX(${100 * (index - currentSlideIndex)}%)`;
-  });
-
-  dots.forEach((dot, index) => (dot.style.background = index === currentSlideIndex ? ACTIVE_DOT_COLOR : INACTIVE_DOT_COLOR));
-};
-
-const handleDotClick = (slides: HTMLDivElement[], currentSlide: number, dots: HTMLDivElement[], event: MouseEvent) => {
-  const dataAttribute = (event.currentTarget as HTMLButtonElement).getAttribute("data-slide");
-  const newSlide = dataAttribute ? +dataAttribute : currentSlide;
-  updatePosition(slides, dots, newSlide);
-};
-
-const createSlide = (imageSrc: string): HTMLDivElement => {
-  const slide = document.createElement("div");
-  const image = document.createElement("img");
-
-  slide.classList.add("slide");
-  image.setAttribute("alt", "");
-  image.setAttribute("src", imageSrc);
-
-  slide.appendChild(image);
-  return slide;
-};
-
-const createDot = (index: number): HTMLButtonElement => {
-  const dot = document.createElement("button");
-  dot.classList.add("dot");
-  dot.setAttribute("data-slide", String(index));
-  return dot;
-};
-
 export const render = () => {
   const slider = document.querySelector<HTMLDivElement>(".slider");
   const dotsContainer = document.querySelector<HTMLDivElement>(".dots-container");
@@ -55,7 +22,7 @@ export const render = () => {
   });
 };
 
-export const init = () => {
+export const attachLogics = () => {
   const slidesNodeList = document.querySelectorAll<HTMLDivElement>(".slide");
   const slides = Array.from(slidesNodeList);
   const nextSlideBtn = document.querySelector<HTMLButtonElement>(".btn-next");
@@ -126,4 +93,37 @@ export const init = () => {
   autoplayPauseBtn!.addEventListener("click", handleAutoplayPause);
 
   updatePosition(slides, dots, currentSlide);
+};
+
+const updatePosition = (slides: HTMLDivElement[], dots: HTMLDivElement[], currentSlideIndex: number) => {
+  slides.forEach((slide, index) => {
+    slide.style.transform = `translateX(${100 * (index - currentSlideIndex)}%)`;
+  });
+
+  dots.forEach((dot, index) => (dot.style.background = index === currentSlideIndex ? ACTIVE_DOT_COLOR : INACTIVE_DOT_COLOR));
+};
+
+const handleDotClick = (slides: HTMLDivElement[], currentSlide: number, dots: HTMLDivElement[], event: MouseEvent) => {
+  const dataAttribute = (event.currentTarget as HTMLButtonElement).getAttribute("data-slide");
+  const newSlide = dataAttribute ? +dataAttribute : currentSlide;
+  updatePosition(slides, dots, newSlide);
+};
+
+const createSlide = (imageSrc: string): HTMLDivElement => {
+  const slide = document.createElement("div");
+  const image = document.createElement("img");
+
+  slide.classList.add("slide");
+  image.setAttribute("alt", "");
+  image.setAttribute("src", imageSrc);
+
+  slide.appendChild(image);
+  return slide;
+};
+
+const createDot = (index: number): HTMLButtonElement => {
+  const dot = document.createElement("button");
+  dot.classList.add("dot");
+  dot.setAttribute("data-slide", String(index));
+  return dot;
 };

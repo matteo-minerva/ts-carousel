@@ -1,4 +1,4 @@
-import { init as initCarousel, render as renderCarousel } from "./carousel";
+import { attachLogics as attachCarouselLogics, render as renderCarousel } from "./carousel";
 
 renderCarousel();
-initCarousel();
+attachCarouselLogics();
