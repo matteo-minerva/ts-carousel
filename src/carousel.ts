@@ -23,26 +23,34 @@ const handleDotClick = (slides: HTMLDivElement[], currentSlide: number, dots: HT
   updatePosition(slides, dots, newSlide);
 };
 
+const createSlide = (imageSrc: string): HTMLDivElement => {
+  const slide = document.createElement("div");
+  const image = document.createElement("img");
+
+  slide.classList.add("slide");
+  image.setAttribute("alt", "");
+  image.setAttribute("src", imageSrc);
+
+  slide.appendChild(image);
+  return slide;
+};
+
+const createDot = (index: number): HTMLButtonElement => {
+  const dot = document.createElement("button");
+  dot.classList.add("dot");
+  dot.setAttribute("data-slide", String(index));
+  return dot;
+};
+
 export const render = () => {
   const slider = document.querySelector<HTMLDivElement>(".slider");
   const dotsContainer = document.querySelector<HTMLDivElement>(".dots-container");
 
   SLIDES_IMAGES.forEach((imageSrc, index) => {
-    // Render slides
-    const slide = document.createElement("div");
-    const image = document.createElement("img");
+    const slide = createSlide(imageSrc);
+    const dot = createDot(index);
 
-    slide.setAttribute("class", "slide");
-    image.setAttribute("alt", "");
-    image.setAttribute("src", imageSrc);
-
-    slide.appendChild(image);
     slider!.appendChild(slide);
-
-    // Render dots
-    const dot = document.createElement("button");
-    dot.setAttribute("class", "dot");
-    dot.setAttribute("data-slide", String(index));
     dotsContainer!.appendChild(dot);
   });
 };
