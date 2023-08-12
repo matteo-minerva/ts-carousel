@@ -23,7 +23,7 @@ body {
 .btn-next {
   @apply right-[2%] top-[45%];
 }
-.dot-container {
+.dots-container {
   @apply absolute z-10 bottom-0 flex justify-center w-full mb-2 gap-1;
 }
 .dot {

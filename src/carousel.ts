@@ -2,6 +2,12 @@ const SWIPE_DISTANCE_THRESHOLD = 50;
 const ACTIVE_DOT_COLOR = "#2563eb";
 const INACTIVE_DOT_COLOR = "#fff";
 const TIMEOUT_VALUE = 1500;
+const SLIDES_IMAGES = [
+  "https://source.unsplash.com/random?japan+temples",
+  "https://source.unsplash.com/random?food,ramen",
+  "https://source.unsplash.com/random?tokyo",
+  "https://source.unsplash.com/random?japan,cherry",
+];
 
 const updatePosition = (slides: HTMLDivElement[], dots: HTMLDivElement[], currentSlideIndex: number) => {
   slides.forEach((slide, index) => {
@@ -15,6 +21,30 @@ const handleDotClick = (slides: HTMLDivElement[], currentSlide: number, dots: HT
   const dataAttribute = (event.currentTarget as HTMLButtonElement).getAttribute("data-slide");
   const newSlide = dataAttribute ? +dataAttribute : currentSlide;
   updatePosition(slides, dots, newSlide);
+};
+
+export const render = () => {
+  const slider = document.querySelector<HTMLDivElement>(".slider");
+  const dotsContainer = document.querySelector<HTMLDivElement>(".dots-container");
+
+  SLIDES_IMAGES.forEach((imageSrc, index) => {
+    // Render slides
+    const slide = document.createElement("div");
+    const image = document.createElement("img");
+
+    slide.setAttribute("class", "slide");
+    image.setAttribute("alt", "");
+    image.setAttribute("src", imageSrc);
+
+    slide.appendChild(image);
+    slider!.appendChild(slide);
+
+    // Render dots
+    const dot = document.createElement("button");
+    dot.setAttribute("class", "dot");
+    dot.setAttribute("data-slide", String(index));
+    dotsContainer!.appendChild(dot);
+  });
 };
 
 export const init = () => {
