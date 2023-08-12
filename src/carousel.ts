@@ -13,17 +13,19 @@ export default class Carousel {
   images: string[] = [];
 
   constructor(options: CarouselOptions) {
-    this.swipedDistanceThreshold = options.swipedDistanceThreshold ?? this.swipedDistanceThreshold;
-    this.activeColor = options.activeColor ?? this.activeColor;
-    this.inactiveColor = options.inactiveColor ?? this.inactiveColor;
-    this.timeout = options.timeout ?? this.timeout;
+    const { swipedDistanceThreshold = 50, activeColor = "#2563eb", inactiveColor = "#ffffff", timeout = 1200, images } = options;
 
-    if (options.images.length === 0) this.handleNoImages();
-    this.images = options.images;
+    this.swipedDistanceThreshold = swipedDistanceThreshold;
+    this.activeColor = activeColor;
+    this.inactiveColor = inactiveColor;
+    this.timeout = timeout;
+
+    if (images.length === 0) this.handleNoImages();
+    this.images = images;
     this.render();
   }
 
-  private render() {
+  private render(): void {
     const slider = document.querySelector<HTMLDivElement>(".slider");
     const dotsContainer = document.querySelector<HTMLDivElement>(".dots-container");
 
@@ -31,12 +33,12 @@ export default class Carousel {
       const slide = this.createSlide(imageSrc);
       const dot = this.createDot(index);
 
-      slider!.appendChild(slide);
-      dotsContainer!.appendChild(dot);
+      slider?.appendChild(slide);
+      dotsContainer?.appendChild(dot);
     });
   }
 
-  private handleNoImages() {
+  private handleNoImages(): void {
     const slider = document.querySelector<HTMLDivElement>(".slider");
     slider?.remove();
     throw new Error("Multiple images were expected but none were provided");
@@ -76,12 +78,10 @@ export default class Carousel {
   }
 
   public init() {
-    const slidesNodeList = document.querySelectorAll<HTMLDivElement>(".slide");
-    const slides = Array.from(slidesNodeList);
+    const slides = Array.from(document.querySelectorAll<HTMLDivElement>(".slide"));
+    const dots = Array.from(document.querySelectorAll<HTMLDivElement>(".dot"));
     const nextSlideBtn = document.querySelector<HTMLButtonElement>(".btn-next");
     const prevSlideBtn = document.querySelector<HTMLButtonElement>(".btn-prev");
-    const dotsNodeList = document.querySelectorAll<HTMLDivElement>(".dot");
-    const dots = Array.from(dotsNodeList);
     const autoplayStartBtn = document.querySelector<HTMLButtonElement>(".autoplay-start");
     const autoplayPauseBtn = document.querySelector<HTMLButtonElement>(".autoplay-pause");
 
@@ -119,8 +119,8 @@ export default class Carousel {
     };
 
     const handleAutoplayStart = () => {
-      autoplayStartBtn!.classList.toggle("hidden");
-      autoplayPauseBtn!.classList.toggle("hidden");
+      autoplayStartBtn?.classList.toggle("hidden");
+      autoplayPauseBtn?.classList.toggle("hidden");
       handleNextSlideClick();
 
       autoplayInterval = setInterval(() => {
@@ -129,21 +129,21 @@ export default class Carousel {
     };
 
     const handleAutoplayPause = () => {
-      autoplayStartBtn!.classList.toggle("hidden");
-      autoplayPauseBtn!.classList.toggle("hidden");
+      autoplayStartBtn?.classList.toggle("hidden");
+      autoplayPauseBtn?.classList.toggle("hidden");
       return clearInterval(autoplayInterval);
     };
 
-    nextSlideBtn!.addEventListener("click", handleNextSlideClick);
-    prevSlideBtn!.addEventListener("click", handlePrevSlideClick);
+    nextSlideBtn?.addEventListener("click", handleNextSlideClick);
+    prevSlideBtn?.addEventListener("click", handlePrevSlideClick);
 
     dots.forEach((dot) => dot.addEventListener("click", (event) => this.handleDotClick(slides, currentSlide, dots, event)));
     slides.forEach((slide) => slide.addEventListener("touchstart", handleSwipeStart));
     slides.forEach((slide) => slide.addEventListener("touchmove", handleSwipeMove));
     slides.forEach((slide) => slide.addEventListener("touchend", handleSwipeEnd));
 
-    autoplayStartBtn!.addEventListener("click", handleAutoplayStart);
-    autoplayPauseBtn!.addEventListener("click", handleAutoplayPause);
+    autoplayStartBtn?.addEventListener("click", handleAutoplayStart);
+    autoplayPauseBtn?.addEventListener("click", handleAutoplayPause);
 
     this.updatePosition(slides, dots, currentSlide);
   }
