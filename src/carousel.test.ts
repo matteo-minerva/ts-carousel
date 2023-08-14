@@ -27,4 +27,10 @@ describe("carousel", () => {
     expect(carousel.timeout).toBe(options.timeout);
     expect(carousel.images).toBe(options.images);
   });
+
+  it("should throw an error when no images are provided", () => {
+    const createCarouselWithoutImages = () => new Carousel({ images: [] });
+
+    expect(createCarouselWithoutImages).toThrowError("Multiple images were expected but none were provided");
+  });
 });
