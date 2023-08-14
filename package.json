@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "test": "jest",
+    "test:watch": "jest --watch",
     "tailwind:watch": "tailwindcss -i ./src/style.css -o ./dist/style.css --watch",
     "tailwind:build": "tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
     "build:npm": "npm run tailwind:build && tsc && vite build",
