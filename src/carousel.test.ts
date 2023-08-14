@@ -89,4 +89,22 @@ describe("carousel", () => {
     document.body.removeChild(slider);
     document.body.removeChild(dotsContainer);
   });
+
+  it("should render the correct number of slides and dots", () => {
+    const options = { images: IMAGES };
+
+    document.body.innerHTML = `
+      <div class="slider"></div>
+      <div class="dots-container"></div>
+    `;
+
+    const carousel = new Carousel(options);
+    carousel.init();
+
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+
+    expect(slides.length).toBe(options.images.length);
+    expect(dots.length).toBe(options.images.length);
+  });
 });
