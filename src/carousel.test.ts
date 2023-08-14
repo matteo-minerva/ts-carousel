@@ -57,4 +57,36 @@ describe("carousel", () => {
     document.body.removeChild(slider);
     document.body.removeChild(dotsContainer);
   });
+
+  it("should set classes, attributes, and content correctly for slides and dots", () => {
+    const slider = document.createElement("div");
+    const dotsContainer = document.createElement("div");
+
+    slider.classList.add("slider");
+    dotsContainer.classList.add("dots-container");
+    document.body.appendChild(slider);
+    document.body.appendChild(dotsContainer);
+
+    const carousel = new Carousel({ images: IMAGES });
+    carousel.init();
+
+    const slideElements = document.querySelectorAll(".slide");
+    const dotElements = document.querySelectorAll(".dot");
+
+    slideElements.forEach((slide, index) => {
+      const image = slide.querySelector("img");
+
+      expect(slide.classList.contains("slide")).toBe(true);
+      expect(image).toBeTruthy();
+      expect(image?.getAttribute("src")).toBe(IMAGES[index]);
+    });
+
+    dotElements.forEach((dot, index) => {
+      expect(dot.classList.contains("dot")).toBe(true);
+      expect(dot.getAttribute("data-slide")).toBe(String(index));
+    });
+
+    document.body.removeChild(slider);
+    document.body.removeChild(dotsContainer);
+  });
 });
