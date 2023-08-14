@@ -1,4 +1,5 @@
 import Carousel from "./carousel";
+import { rgbToHex } from "./helpers/colors";
 
 const IMAGES = ["https://images.unsplash.com/photo-1545569341-9eb8b30979d9", "https://images.unsplash.com/photo-1528164344705-47542687000d"];
 
@@ -106,5 +107,19 @@ describe("carousel", () => {
 
     expect(slides.length).toBe(options.images.length);
     expect(dots.length).toBe(options.images.length);
+  });
+
+  it("should update slide and dot positions correctly", () => {
+    const carousel = new Carousel({ images: IMAGES });
+    carousel.init();
+
+    const slides = document.querySelectorAll<HTMLDivElement>(".slide");
+    const dots = document.querySelectorAll<HTMLButtonElement>(".dot");
+
+    expect(slides[0].style.transform).toBe("translateX(0%)");
+    expect(slides[1].style.transform).toBe("translateX(100%)");
+
+    expect(rgbToHex(dots[0].style.background)).toBe(carousel.activeColor);
+    expect(rgbToHex(dots[1].style.background)).toBe(carousel.inactiveColor);
   });
 });
