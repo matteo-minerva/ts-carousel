@@ -1,8 +1,10 @@
 import Carousel from "./carousel";
 
+const IMAGES = ["https://images.unsplash.com/photo-1545569341-9eb8b30979d9", "https://images.unsplash.com/photo-1528164344705-47542687000d"];
+
 describe("carousel", () => {
   it("should create an instance with default options", () => {
-    const carousel = new Carousel({ images: ["image1.jpg", "image2.jpg"] });
+    const carousel = new Carousel({ images: IMAGES });
 
     expect(carousel.swipedDistanceThreshold).toBe(50);
     expect(carousel.activeColor).toBe("#2563eb");
@@ -16,7 +18,7 @@ describe("carousel", () => {
       activeColor: "#ff0000",
       inactiveColor: "#00ff00",
       timeout: 2000,
-      images: ["image1.jpg", "image2.jpg"],
+      images: IMAGES,
     };
 
     const carousel = new Carousel(options);
@@ -32,5 +34,27 @@ describe("carousel", () => {
     const createCarouselWithoutImages = () => new Carousel({ images: [] });
 
     expect(createCarouselWithoutImages).toThrowError("Multiple images were expected but none were provided");
+  });
+
+  it("should render slides and dots based on provided images", () => {
+    const slider = document.createElement("div");
+    const dotsContainer = document.createElement("div");
+
+    slider.classList.add("slider");
+    dotsContainer.classList.add("dots-container");
+    document.body.appendChild(slider);
+    document.body.appendChild(dotsContainer);
+
+    const carousel = new Carousel({ images: IMAGES });
+    carousel.init();
+
+    const slideElements = document.querySelectorAll<HTMLDivElement>(".slide");
+    const dotElements = document.querySelectorAll<HTMLDivElement>(".dot");
+
+    expect(slideElements.length).toBe(IMAGES.length);
+    expect(dotElements.length).toBe(IMAGES.length);
+
+    document.body.removeChild(slider);
+    document.body.removeChild(dotsContainer);
   });
 });
