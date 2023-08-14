@@ -123,7 +123,7 @@ export default class Carousel {
       autoplayPauseBtn?.classList.toggle("hidden");
       handleNextSlideClick();
 
-      autoplayInterval = setInterval(() => {
+      autoplayInterval = window.setInterval(() => {
         handleNextSlideClick();
       }, this.timeout);
     };

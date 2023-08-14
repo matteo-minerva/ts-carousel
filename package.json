@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "jest",
     "tailwind:watch": "tailwindcss -i ./src/style.css -o ./dist/style.css --watch",
     "tailwind:build": "tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
     "build:npm": "npm run tailwind:build && tsc && vite build",
@@ -12,8 +13,16 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
     "tailwindcss": "^3.3.3",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom"
   }
 }
