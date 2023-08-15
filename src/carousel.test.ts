@@ -1,11 +1,8 @@
 import Carousel from "./carousel";
-import { rgbToHex } from "./helpers/colors";
-
-const IMAGES = ["https://images.unsplash.com/photo-1545569341-9eb8b30979d9", "https://images.unsplash.com/photo-1528164344705-47542687000d"];
 
 describe("carousel", () => {
   it("should create an instance with default options", () => {
-    const carousel = new Carousel({ images: IMAGES });
+    const carousel = new Carousel({ images: ["image1.jgp", "image2.jpg"] });
 
     expect(carousel.swipedDistanceThreshold).toBe(50);
     expect(carousel.activeColor).toBe("#2563eb");
@@ -19,7 +16,7 @@ describe("carousel", () => {
       activeColor: "#ff0000",
       inactiveColor: "#00ff00",
       timeout: 2000,
-      images: IMAGES,
+      images: ["image1.jgp", "image2.jpg"],
     };
 
     const carousel = new Carousel(options);
@@ -38,37 +35,22 @@ describe("carousel", () => {
   });
 
   it("should render slides and dots based on provided images", () => {
-    const slider = document.createElement("div");
-    const dotsContainer = document.createElement("div");
+    renderDOM();
 
-    slider.classList.add("slider");
-    dotsContainer.classList.add("dots-container");
-    document.body.appendChild(slider);
-    document.body.appendChild(dotsContainer);
-
-    const carousel = new Carousel({ images: IMAGES });
+    const carousel = new Carousel({ images: ["image1.jgp", "image2.jpg"] });
     carousel.init();
 
     const slideElements = document.querySelectorAll<HTMLDivElement>(".slide");
     const dotElements = document.querySelectorAll<HTMLDivElement>(".dot");
 
-    expect(slideElements.length).toBe(IMAGES.length);
-    expect(dotElements.length).toBe(IMAGES.length);
-
-    document.body.removeChild(slider);
-    document.body.removeChild(dotsContainer);
+    expect(slideElements.length).toBe(["image1.jgp", "image2.jpg"].length);
+    expect(dotElements.length).toBe(["image1.jgp", "image2.jpg"].length);
   });
 
   it("should set classes, attributes, and content correctly for slides and dots", () => {
-    const slider = document.createElement("div");
-    const dotsContainer = document.createElement("div");
+    renderDOM();
 
-    slider.classList.add("slider");
-    dotsContainer.classList.add("dots-container");
-    document.body.appendChild(slider);
-    document.body.appendChild(dotsContainer);
-
-    const carousel = new Carousel({ images: IMAGES });
+    const carousel = new Carousel({ images: ["image1.jgp", "image2.jpg"] });
     carousel.init();
 
     const slideElements = document.querySelectorAll(".slide");
@@ -79,26 +61,19 @@ describe("carousel", () => {
 
       expect(slide.classList.contains("slide")).toBe(true);
       expect(image).toBeTruthy();
-      expect(image?.getAttribute("src")).toBe(IMAGES[index]);
+      expect(image?.getAttribute("src")).toBe(["image1.jgp", "image2.jpg"][index]);
     });
 
     dotElements.forEach((dot, index) => {
       expect(dot.classList.contains("dot")).toBe(true);
       expect(dot.getAttribute("data-slide")).toBe(String(index));
     });
-
-    document.body.removeChild(slider);
-    document.body.removeChild(dotsContainer);
   });
 
   it("should render the correct number of slides and dots", () => {
-    const options = { images: IMAGES };
+    renderDOM();
 
-    document.body.innerHTML = `
-      <div class="slider">
-        <div class="dots-container"></div>
-      </div>
-    `;
+    const options = { images: ["image1.jgp", "image2.jpg"] };
 
     const carousel = new Carousel(options);
     carousel.init();
@@ -109,4 +84,45 @@ describe("carousel", () => {
     expect(slides.length).toBe(options.images.length);
     expect(dots.length).toBe(options.images.length);
   });
+
+  it("should implement infinite loop", () => {
+    renderDOM();
+
+    const carousel = new Carousel({ images: ["image1.jgp", "image2.jpg"] });
+    carousel.init();
+
+    const firstSlide = document.querySelector<HTMLDivElement>(".slide");
+    const nextBtn = document.querySelector<HTMLButtonElement>(".btn-next");
+    const prevBtn = document.querySelector<HTMLButtonElement>(".btn-prev");
+    expect(firstSlide?.style.transform).toBe("translateX(0%)");
+
+    // Reaches the image 2/2
+    nextBtn?.click();
+    expect(firstSlide?.style.transform).toBe("translateX(-100%)");
+
+    // Goes back go image 1/2
+    nextBtn?.click();
+    expect(firstSlide?.style.transform).toBe("translateX(0%)");
+
+    prevBtn?.click();
+    expect(firstSlide?.style.transform).toBe("translateX(-100%)");
+  });
 });
+
+function renderDOM() {
+  document.body.innerHTML = `
+  <div class="slider">
+    <button class="btn btn-next">&#62;</button>
+    <button class="btn btn-prev">&#60;</button>
+
+    <div class="dots-container"></div>
+
+    <button aria-label="autoplay" class="autoplay autoplay-start">
+      <img src="/play.svg" alt="" />
+    </button>
+    <button aria-label="autoplay" class="autoplay autoplay-pause hidden">
+      <img src="/pause.svg" alt="" />
+    </button>
+  </div>  
+`;
+}
