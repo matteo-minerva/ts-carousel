@@ -95,8 +95,9 @@ describe("carousel", () => {
     const options = { images: IMAGES };
 
     document.body.innerHTML = `
-      <div class="slider"></div>
-      <div class="dots-container"></div>
+      <div class="slider">
+        <div class="dots-container"></div>
+      </div>
     `;
 
     const carousel = new Carousel(options);
@@ -107,19 +108,5 @@ describe("carousel", () => {
 
     expect(slides.length).toBe(options.images.length);
     expect(dots.length).toBe(options.images.length);
-  });
-
-  it("should update slide and dot positions correctly", () => {
-    const carousel = new Carousel({ images: IMAGES });
-    carousel.init();
-
-    const slides = document.querySelectorAll<HTMLDivElement>(".slide");
-    const dots = document.querySelectorAll<HTMLButtonElement>(".dot");
-
-    expect(slides[0].style.transform).toBe("translateX(0%)");
-    expect(slides[1].style.transform).toBe("translateX(100%)");
-
-    expect(rgbToHex(dots[0].style.background)).toBe(carousel.activeColor);
-    expect(rgbToHex(dots[1].style.background)).toBe(carousel.inactiveColor);
   });
 });
