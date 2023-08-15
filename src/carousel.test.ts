@@ -11,10 +11,10 @@ describe("carousel", () => {
   it("should create an instance with default options", () => {
     const carousel = new Carousel({ images: ["image1.jgp", "image2.jpg"] });
 
-    expect(carousel.swipedDistanceThreshold).toBe(50);
-    expect(carousel.activeColor).toBe("#2563eb");
-    expect(carousel.inactiveColor).toBe("#ffffff");
-    expect(carousel.timeout).toBe(1200);
+    expect(carousel.getSwipeDistance).toBe(50);
+    expect(carousel.getActiveColor).toBe("#2563eb");
+    expect(carousel.getInactiveColor).toBe("#ffffff");
+    expect(carousel.getTimeout).toBe(1200);
   });
 
   it("should create an instance with provided options", () => {
@@ -28,11 +28,11 @@ describe("carousel", () => {
 
     const carousel = new Carousel(options);
 
-    expect(carousel.swipedDistanceThreshold).toBe(options.swipedDistanceThreshold);
-    expect(carousel.activeColor).toBe(options.activeColor);
-    expect(carousel.inactiveColor).toBe(options.inactiveColor);
-    expect(carousel.timeout).toBe(options.timeout);
-    expect(carousel.images).toBe(options.images);
+    expect(carousel.getSwipeDistance).toBe(options.swipedDistanceThreshold);
+    expect(carousel.getActiveColor).toBe(options.activeColor);
+    expect(carousel.getInactiveColor).toBe(options.inactiveColor);
+    expect(carousel.getTimeout).toBe(options.timeout);
+    expect(carousel.getImages).toBe(options.images);
   });
 
   it("should throw an error when no images are provided", () => {
@@ -129,7 +129,7 @@ describe("carousel", () => {
 
     autoplayStartBtn?.click();
 
-    jest.advanceTimersByTime(carousel.timeout);
+    jest.advanceTimersByTime(carousel.getTimeout);
 
     const newSlide = document.querySelector<HTMLDivElement>(".slide");
     expect(newSlide?.style.transform).not.toBe("translateX(0%)");

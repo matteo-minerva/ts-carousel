@@ -6,11 +6,11 @@ interface CarouselOptions {
   images: string[];
 }
 export default class Carousel {
-  swipedDistanceThreshold = 50;
-  activeColor = "#2563eb";
-  inactiveColor = "#ffffff";
-  timeout = 1200;
-  images: string[] = [];
+  private swipedDistanceThreshold = 50;
+  private activeColor = "#2563eb";
+  private inactiveColor = "#ffffff";
+  private timeout = 1200;
+  private images: string[] = [];
 
   constructor(options: CarouselOptions) {
     const { swipedDistanceThreshold = 50, activeColor = "#2563eb", inactiveColor = "#ffffff", timeout = 1200, images } = options;
@@ -146,5 +146,45 @@ export default class Carousel {
     autoplayPauseBtn?.addEventListener("click", handleAutoplayPause);
 
     this.updatePosition(slides, dots, currentSlide);
+  }
+
+  public set setActiveColor(color: string) {
+    this.activeColor = color;
+  }
+
+  public set setSwipeDistance(distance: number) {
+    this.swipedDistanceThreshold = distance;
+  }
+
+  public set setInactiveColor(color: string) {
+    this.inactiveColor = color;
+  }
+
+  public set setTimeout(timeout: number) {
+    this.timeout = timeout;
+  }
+
+  public set setImages(images: string[]) {
+    this.images = images;
+  }
+
+  public get getActiveColor() {
+    return this.activeColor;
+  }
+
+  public get getSwipeDistance() {
+    return this.swipedDistanceThreshold;
+  }
+
+  public get getInactiveColor() {
+    return this.inactiveColor;
+  }
+
+  public get getTimeout() {
+    return this.timeout;
+  }
+
+  public get getImages() {
+    return this.images;
   }
 }
