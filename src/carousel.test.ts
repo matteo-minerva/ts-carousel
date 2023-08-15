@@ -104,6 +104,7 @@ describe("carousel", () => {
     nextBtn?.click();
     expect(firstSlide?.style.transform).toBe("translateX(0%)");
 
+    // It work on the other way around
     prevBtn?.click();
     expect(firstSlide?.style.transform).toBe("translateX(-100%)");
   });
