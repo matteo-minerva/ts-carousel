@@ -1,6 +1,13 @@
 import Carousel from "./carousel";
 
 describe("carousel", () => {
+  afterEach(() => {
+    jest.clearAllTimers();
+
+    const body = document.querySelector<HTMLBodyElement>("body");
+    body!.innerHTML = "";
+  });
+
   it("should create an instance with default options", () => {
     const carousel = new Carousel({ images: ["image1.jgp", "image2.jpg"] });
 
@@ -107,6 +114,25 @@ describe("carousel", () => {
     // It work on the other way around
     prevBtn?.click();
     expect(firstSlide?.style.transform).toBe("translateX(-100%)");
+  });
+
+  it("should implement autoplay", () => {
+    jest.useFakeTimers();
+    renderDOM();
+
+    const carousel = new Carousel({ images: ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"] });
+    carousel.init();
+
+    const initialSlide = document.querySelector<HTMLDivElement>(".slide");
+    expect(initialSlide?.style.transform).toBe("translateX(0%)");
+    const autoplayStartBtn = document.querySelector<HTMLButtonElement>(".autoplay-start");
+
+    autoplayStartBtn?.click();
+
+    jest.advanceTimersByTime(carousel.timeout);
+
+    const newSlide = document.querySelector<HTMLDivElement>(".slide");
+    expect(newSlide?.style.transform).not.toBe("translateX(0%)");
   });
 });
 
