@@ -27,7 +27,7 @@ body {
   @apply absolute z-10 bottom-0 flex justify-center w-full mb-2 gap-1;
 }
 .dot {
-  @apply bg-white border border-sky-800 rounded-full w-3 h-3;
+  @apply bg-white border rounded-full w-3 h-3;
 }
 .autoplay {
   @apply absolute z-10 bottom-0 right-0 w-8 h-auto bg-white rounded-full p-2.5 m-1 shadow;
