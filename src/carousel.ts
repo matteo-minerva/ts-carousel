@@ -25,10 +25,31 @@ export default class Carousel {
     this.render();
   }
 
-  private render(): void {
+  private render() {
+    const body = document.querySelector<HTMLBodyElement>("body");
+    if (!body) throw new Error("A 'body' element was expect but none was found");
+
+    body.innerHTML = `
+      <div class="slider">
+      <!-- Control buttons -->
+      <button class="btn btn-next">&#62;</button>
+      <button class="btn btn-prev">&#60;</button>
+
+      <!-- Control dots -->
+      <div class="dots-container"></div>
+
+      <!-- Autplay btn / play and pause btns -->
+      <button aria-label="autoplay" class="autoplay autoplay-start">
+        <img src="/play.svg" alt="" />
+      </button>
+      <button aria-label="autoplay" class="autoplay autoplay-pause hidden">
+        <img src="/pause.svg" alt="" />
+      </button>
+    </div>
+  `;
+
     const slider = document.querySelector<HTMLDivElement>(".slider");
     const dotsContainer = document.querySelector<HTMLDivElement>(".dots-container");
-
     this.images.forEach((imageSrc, index) => {
       const slide = this.createSlide(imageSrc);
       const dot = this.createDot(index);
