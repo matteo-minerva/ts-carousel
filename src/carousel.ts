@@ -20,7 +20,7 @@ export default class Carousel {
     this.inactiveColor = inactiveColor;
     this.timeout = timeout;
 
-    if (images.length === 0) this.handleNoImages();
+    if (images.length === 0) throw new Error("Multiple images were expected but none were provided");
     this.images = images;
     this.render();
   }
@@ -57,12 +57,6 @@ export default class Carousel {
       slider?.appendChild(slide);
       dotsContainer?.appendChild(dot);
     });
-  }
-
-  private handleNoImages(): void {
-    const slider = document.querySelector<HTMLDivElement>(".slider");
-    slider?.remove();
-    throw new Error("Multiple images were expected but none were provided");
   }
 
   private createSlide(imageSrc: string): HTMLDivElement {
