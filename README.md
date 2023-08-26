@@ -111,6 +111,18 @@ To launch this project, you should have installed `Node.js`, `npm` and `yarn`.
    yarn build:yarn
    ```
 
+4. Run the project by running the `preview` script
+
+   ```sh
+   npm run preview
+   ```
+
+   or
+
+   ```sh
+   yarn preview
+   ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTACT -->
